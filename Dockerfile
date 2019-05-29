@@ -43,6 +43,16 @@ RUN dnf install -y \
   && dnf clean all
 
 # Install Robot Framework and Selenium Library
+RUN pip install \
+  robotframework==$ROBOT_FRAMEWORK_VERSION \
+  robotframework-faker==$FAKER_VERSION \
+  robotframework-pabot==$PABOT_VERSION \
+  robotframework-requests==$REQUESTS_VERSION \
+  robotframework-seleniumlibrary==$SELENIUM_LIBRARY_VERSION \
+  robotframework-sshlibrary \
+  tornado \
+  nose
+
 RUN pip install --user \
   robotframework==$ROBOT_FRAMEWORK_VERSION \
   robotframework-faker==$FAKER_VERSION \
