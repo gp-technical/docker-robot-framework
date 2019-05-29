@@ -20,7 +20,6 @@ ENV ROBOT_THREADS 1
 ENV CHROMIUM_VERSION 73.0.*
 ENV FAKER_VERSION 4.2.0
 ENV GECKO_DRIVER_VERSION v0.22.0
-ENV PABOT_VERSION 0.53
 ENV PYTHON_PIP_VERSION 18.0*
 ENV REQUESTS_VERSION 0.5.0
 ENV ROBOT_FRAMEWORK_VERSION 3.1.1
@@ -49,16 +48,7 @@ RUN pip install \
   robotframework-pabot==$PABOT_VERSION \
   robotframework-requests==$REQUESTS_VERSION \
   robotframework-seleniumlibrary==$SELENIUM_LIBRARY_VERSION \
-  robotframework-sshlibrary \
-  tornado \
-  nose
-
-RUN pip install --user \
-  robotframework==$ROBOT_FRAMEWORK_VERSION \
-  robotframework-faker==$FAKER_VERSION \
-  robotframework-pabot==$PABOT_VERSION \
-  robotframework-requests==$REQUESTS_VERSION \
-  robotframework-seleniumlibrary==$SELENIUM_LIBRARY_VERSION \
+  robotframework-selenium2library \
   robotframework-sshlibrary \
   tornado \
   nose
