@@ -37,9 +37,8 @@ RUN dnf upgrade -y \
   wget
 
 # Install chrome dependencies
-RUN dnf upgrade -y \
-  && dnf install -y \
-  chromedriver-71.0.* \
+RUN dnf install -y \
+  chromedriver-$CHROMIUM_VERSION \
   chromium-$CHROMIUM_VERSION \
   && dnf clean all
 
