@@ -6,6 +6,7 @@ LABEL description Robot Framework in Docker.
 # Setup volumes for input and output
 VOLUME /opt/robotframework/reports
 VOLUME /opt/robotframework/tests
+VOLUME /dev/shm
 
 # Setup X Window Virtual Framebuffer
 ENV SCREEN_COLOUR_DEPTH 24
