@@ -35,6 +35,7 @@ RUN dnf upgrade -y \
   xauth \
   xorg-x11-server-Xvfb-$XVFB_VERSION \
   which \
+  unzip \
   wget
 
 # Install chrome dependencies
@@ -73,6 +74,14 @@ RUN mv /usr/lib64/chromium-browser/chromium-browser /usr/lib64/chromium-browser/
 
 # Update system path
 ENV PATH=/opt/robotframework/bin:/opt/robotframework/drivers:$PATH
+
+RUN curl https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip -o vault.zip && \
+  unzip vault.zip && \
+  chmod +x vault && \
+  mv vault /usr/bin/vault && \
+  vault --version
+
+RUN vault --help
 
 # Execute all robot tests
 CMD ["run-tests-in-virtual-screen.sh"]
