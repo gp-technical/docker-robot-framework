@@ -36,6 +36,7 @@ RUN dnf upgrade -y \
   xorg-x11-server-Xvfb-$XVFB_VERSION \
   which \
   unzip \
+  jq \
   wget
 
 # Install chrome dependencies
@@ -80,8 +81,6 @@ RUN curl https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zi
   chmod +x vault && \
   mv vault /usr/bin/vault && \
   vault --version
-
-RUN vault --help
 
 # Execute all robot tests
 CMD ["run-tests-in-virtual-screen.sh"]
