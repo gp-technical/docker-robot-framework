@@ -82,5 +82,9 @@ RUN curl https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zi
   mv vault /usr/bin/vault && \
   vault --version
 
+ARG CACHEBUST=1 
+RUN curl -H 'Cache-Control: no-cache, no-store' https://cli.goodpractice.cloud/install.sh | sh && \
+    gp --version
+
 # Execute all robot tests
 CMD ["run-tests-in-virtual-screen.sh"]
