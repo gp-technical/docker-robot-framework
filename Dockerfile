@@ -18,14 +18,7 @@ ENV SCREEN_WIDTH 1920
 ENV ROBOT_THREADS 1
 
 # Dependency versions
-ENV CHROMIUM_VERSION 73.0.*
-ENV FAKER_VERSION 4.2.0
-ENV GECKO_DRIVER_VERSION v0.22.0
-ENV PABOT_VERSION 0.53
 ENV PYTHON_PIP_VERSION 18.0*
-ENV REQUESTS_VERSION 0.5.0
-ENV ROBOT_FRAMEWORK_VERSION 3.1.1
-ENV SELENIUM_LIBRARY_VERSION 3.3.1
 ENV XVFB_VERSION 1.20.*
 
 # Install system dependencies
@@ -38,14 +31,19 @@ RUN dnf upgrade -y \
   unzip \
   jq \
   wget
-
-# Install chrome dependencies
-RUN dnf install -y \
-  chromedriver-$CHROMIUM_VERSION \
-  chromium-$CHROMIUM_VERSION \
-  && dnf clean all
+# ENV CHROMIUM_VERSION *
+# # Install chrome dependencies
+# RUN dnf install -y \
+#   chromedriver$CHROMIUM_VERSION \
+#   chromium$CHROMIUM_VERSION \
+#   && dnf clean all
 
 # Install Robot Framework and Selenium Library
+ENV FAKER_VERSION 4.2.0
+ENV PABOT_VERSION 0.53
+ENV REQUESTS_VERSION 0.5.0
+ENV ROBOT_FRAMEWORK_VERSION 3.1.1
+ENV SELENIUM_LIBRARY_VERSION 3.3.1
 RUN pip install \
   robotframework==$ROBOT_FRAMEWORK_VERSION \
   robotframework-faker==$FAKER_VERSION \
@@ -58,6 +56,7 @@ RUN pip install \
   nose
 
 # Download Gecko drivers directly from the GitHub repository
+ENV GECKO_DRIVER_VERSION v0.22.0
 RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/$GECKO_DRIVER_VERSION/geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz" \
   && tar xzf geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz \
   && mkdir -p /opt/robotframework/drivers/ \
@@ -65,13 +64,13 @@ RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/$GECKO_DRI
   && rm geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz
 
 # Prepare binaries to be executed
-COPY bin/chromedriver.sh /opt/robotframework/bin/chromedriver
-COPY bin/chromium-browser.sh /opt/robotframework/bin/chromium-browser
+# COPY bin/chromedriver.sh /opt/robotframework/bin/chromedriver
+# COPY bin/chromium-browser.sh /opt/robotframework/bin/chromium-browser
 COPY bin/run-tests-in-virtual-screen.sh /opt/robotframework/bin/
 
 # FIXME: below is a workaround, as the path is ignored
-RUN mv /usr/lib64/chromium-browser/chromium-browser /usr/lib64/chromium-browser/chromium-browser-original \
-  && ln -sfv /opt/robotframework/bin/chromium-browser /usr/lib64/chromium-browser/chromium-browser
+# RUN mv /usr/lib64/chromium-browser/chromium-browser /usr/lib64/chromium-browser/chromium-browser-original \
+  # && ln -sfv /opt/robotframework/bin/chromium-browser /usr/lib64/chromium-browser/chromium-browser
 
 # Update system path
 ENV PATH=/opt/robotframework/bin:/opt/robotframework/drivers:$PATH
