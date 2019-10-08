@@ -31,12 +31,12 @@ RUN dnf upgrade -y \
   unzip \
   jq \
   wget
-# ENV CHROMIUM_VERSION *
+ENV CHROMIUM_VERSION *
 # # Install chrome dependencies
-# RUN dnf install -y \
-#   chromedriver$CHROMIUM_VERSION \
-#   chromium$CHROMIUM_VERSION \
-#   && dnf clean all
+RUN dnf install -y \
+  chromedriver$CHROMIUM_VERSION \
+  chromium$CHROMIUM_VERSION \
+  && dnf clean all
 
 # Install Robot Framework and Selenium Library
 ENV FAKER_VERSION 4.2.0
@@ -64,13 +64,13 @@ RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/$GECKO_DRI
   && rm geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz
 
 # Prepare binaries to be executed
-# COPY bin/chromedriver.sh /opt/robotframework/bin/chromedriver
-# COPY bin/chromium-browser.sh /opt/robotframework/bin/chromium-browser
+COPY bin/chromedriver.sh /opt/robotframework/bin/chromedriver
+COPY bin/chromium-browser.sh /opt/robotframework/bin/chromium-browser
 COPY bin/run-tests-in-virtual-screen.sh /opt/robotframework/bin/
 
 # FIXME: below is a workaround, as the path is ignored
-# RUN mv /usr/lib64/chromium-browser/chromium-browser /usr/lib64/chromium-browser/chromium-browser-original \
-  # && ln -sfv /opt/robotframework/bin/chromium-browser /usr/lib64/chromium-browser/chromium-browser
+RUN mv /usr/lib64/chromium-browser/chromium-browser /usr/lib64/chromium-browser/chromium-browser-original \
+  && ln -sfv /opt/robotframework/bin/chromium-browser /usr/lib64/chromium-browser/chromium-browser
 
 # Update system path
 ENV PATH=/opt/robotframework/bin:/opt/robotframework/drivers:$PATH
