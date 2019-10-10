@@ -81,6 +81,16 @@ RUN curl https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zi
   mv vault /usr/bin/vault && \
   vault --version
 
+RUN wget http://downloads.lambdatest.com/tunnel/linux/64bit/LT_Linux.zip && \
+  unzip LT_Linux.zip && \
+  chmod +x LT && \
+  mv LT /usr/bin/LT
+
+RUN wget https://github.com/crossbrowsertesting/cbt-tunnel-nodejs/releases/download/v0.9.10/cbt_tunnels-linux-x64.zip && \
+  unzip cbt_tunnels-linux-x64.zip && ls -alh cbt_tunnels-linux-x64 && \
+  chmod +x cbt_tunnels-linux-x64 && \
+  mv cbt_tunnels-linux-x64 /usr/bin/cbt_tunnels
+
 ARG CACHEBUST=1 
 RUN curl -H 'Cache-Control: no-cache, no-store' https://cli.goodpractice.cloud/install.sh | sh && \
     gp --version
