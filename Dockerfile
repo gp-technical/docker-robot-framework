@@ -87,7 +87,7 @@ RUN wget https://github.com/crossbrowsertesting/cbt-tunnel-nodejs/releases/downl
   mv cbt_tunnels-linux-x64 /usr/bin/cbt_tunnels
 
 ARG CACHEBUST=1 
-RUN curl -H 'Cache-Control: no-cache, no-store' https://cli.goodpractice.cloud/install.sh | sh && \
+RUN curl -k -H 'Cache-Control: no-cache, no-store' https://cli.goodpractice.cloud/install.sh | sh && \
     gp --version
 
 RUN wget http://downloads.lambdatest.com/tunnel/linux/64bit/LT_Linux.zip && \
