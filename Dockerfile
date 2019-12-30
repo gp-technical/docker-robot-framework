@@ -39,7 +39,7 @@ RUN dnf install -y \
   && dnf clean all
 
 # Install Robot Framework and Selenium Library
-ENV FAKER_VERSION 4.2.0
+ENV FAKER_VERSION 4.3.0
 ENV PABOT_VERSION 0.53
 ENV REQUESTS_VERSION 0.5.0
 ENV ROBOT_FRAMEWORK_VERSION 3.1.1
